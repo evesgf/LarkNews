@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
+using LarkNews.Commons;
 using LarkNews.Dao;
 using LarkNews.Entity;
 
@@ -19,35 +20,47 @@ namespace LarkNews.Services
             _repository = repository;
         }
 
+        public NewsList GetFirstPaper()
+        {
+            return _repository.GetFirstPaper();
+        }
+
         public NewsList GetMorningPaper(int id)
         {
             return _repository.Get(p => p.Id == id);
-        }
-
-        public NewsList GetFirstPaper()
-        {
-            return null;
         }
 
         public int UpDateMorningPaper()
         {
             var url = "http://www.pmtown.com/archives/category/paomianzaobanche";
 
-            var info = new HtmlParser().Parse(GetHTMLByURL(url)).QuerySelectorAll("h2.item-title");
+            var dom = new HtmlParser().Parse(GetHTMLByURL(url));
+
+            var publishTime = dom.QuerySelector("span.item-meta-li");
+
+            var info = dom.QuerySelectorAll("h2.item-title");
             if (info != null)
             {
+                var title= info.First().QuerySelectorAll("a").First().GetAttribute("title");
                 var detailUrl = info.First().QuerySelectorAll("a").First().GetAttribute("href");
 
-                var dom=new HtmlParser().Parse(GetHTMLByURL(detailUrl)).QuerySelectorAll("div.entry-content");
+                var dom2=new HtmlParser().Parse(GetHTMLByURL(detailUrl)).QuerySelectorAll("div.entry-content");
 
-                if (dom != null)
+                if (dom2 != null)
                 {
+                    var time = String2DateTime(publishTime.TextContent);
+                    //if (time == null) return -2;
+
                     var model = new NewsList
                     {
-                        From = detailUrl,
-                        Content = dom.First().InnerHtml,
-                        CreateTime = DateTime.Now
+                        NewsFrom = "泡面小镇",
+                        NewsFromUrl = detailUrl,
+                        NewsTitle = title,
+                        NewsPublishTime = TimeHelper.ConvertToTimeStamp((DateTime)time),
+                        NewsContent = dom2.First().InnerHtml,
+                        NewsCreateTime = TimeHelper.ConvertToTimeStamp(DateTime.Now)
                     };
+
                     _repository.Save(model);
                     return 0;
                 }
@@ -58,6 +71,27 @@ namespace LarkNews.Services
             }
 
             return -2;
+        }
+
+        public void SaveError()
+        {
+            var model = new NewsList
+            {
+                NewsFrom = "Error",
+                NewsCreateTime = TimeHelper.ConvertToTimeStamp(DateTime.Now)
+            };
+
+            _repository.Save(model);
+        }
+
+        public DateTime? String2DateTime(string str)
+        {
+            var index = str.IndexOf("小时",StringComparison.Ordinal);
+
+            if (index <= -1) return null;
+            var hours= str.Substring(0, index);
+
+            return DateTime.Now.AddHours(-Int32.Parse(hours));
         }
 
         public string GetHTMLByURL(string url)

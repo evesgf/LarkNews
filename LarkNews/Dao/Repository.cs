@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LarkNews.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LarkNews.Dao
@@ -35,7 +36,7 @@ namespace LarkNews.Dao
 
         public T Get(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().AsNoTracking().SingleOrDefault(predicate);
+            return _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
         }
 
         public bool Delete(T entity, bool isCommit = true)
@@ -45,6 +46,11 @@ namespace LarkNews.Dao
             _context.Remove(entity);
 
             return isCommit && _unitOfWork.Commit();
+        }
+
+        public T GetFirstPaper()
+        {
+            return _context.Set<T>().LastOrDefault();
         }
     }
 }

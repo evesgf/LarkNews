@@ -8,10 +8,9 @@ namespace LarkNews.Services
 {
     public interface IPMTownService
     {
-        NewsList GetMorningPaper(int id);
-
         NewsList GetFirstPaper();
-
+        NewsList GetMorningPaper(int id);
         int UpDateMorningPaper();
+        void SaveError();
     }
 }

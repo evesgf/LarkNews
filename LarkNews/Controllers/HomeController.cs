@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LarkNews.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Home")]
+    [Route("api/[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly IPMTownService _pmTownService;
@@ -21,17 +21,24 @@ namespace LarkNews.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> UpDateMorningPaper()
         {
             var re = _pmTownService.UpDateMorningPaper();
-            return new string[] { "value1","value2" };
+            return new string[] { "value1", re.ToString() };
+        }
+
+        [HttpGet]
+        public IEnumerable<string> FristPaper()
+        {
+            var re = _pmTownService.GetFirstPaper();
+            return new string[] {re.NewsContent };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return _pmTownService.GetMorningPaper(id).Content;
+            return _pmTownService.GetMorningPaper(id).NewsContent;
         }
     }
 }

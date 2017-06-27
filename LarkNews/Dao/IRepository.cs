@@ -12,5 +12,6 @@ namespace LarkNews.Dao
         bool Update(T entity, bool isCommit = true);
         T Get(Expression<Func<T, bool>> predicate);
         bool Delete(T entity, bool isCommit = true);
+        T GetFirstPaper();
     }
 }

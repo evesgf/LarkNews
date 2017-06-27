@@ -20,18 +20,31 @@ namespace LarkNews.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content")
+                    b.Property<string>("NewsContent")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateTime");
+                    b.Property<long>("NewsCreateTime")
+                        .HasColumnType("long");
 
-                    b.Property<string>("From")
+                    b.Property<string>("NewsFrom")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("NewsFromUrl")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<long>("NewsPublishTime")
+                        .HasColumnType("long");
+
+                    b.Property<string>("NewsTitle")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
                     b.HasKey("Id");
 
-                    b.ToTable("NewsList");
+                    b.ToTable("newslist");
                 });
         }
     }

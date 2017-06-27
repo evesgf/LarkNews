@@ -8,8 +8,8 @@ using LarkNews.Dao;
 namespace LarkNews.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20170626121406_M2")]
-    partial class M2
+    [Migration("20170626152848_MyFirstMigration")]
+    partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,18 +21,31 @@ namespace LarkNews.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content")
+                    b.Property<string>("NewsContent")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateTime");
+                    b.Property<long>("NewsCreateTime")
+                        .HasColumnType("long");
 
-                    b.Property<string>("From")
+                    b.Property<string>("NewsFrom")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("NewsFromUrl")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<long>("NewsPublishTime")
+                        .HasColumnType("long");
+
+                    b.Property<string>("NewsTitle")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
                     b.HasKey("Id");
 
-                    b.ToTable("NewsList");
+                    b.ToTable("newslist");
                 });
         }
     }
