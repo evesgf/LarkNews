@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace LarkNews.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    //启用跨域
+    [EnableCors("AllowSameDomain")]
+    [Produces("application/json")]
+    [Route("api/[controller]/[action]")]
+    public class BitNewsController : Controller
     {
         // GET api/values
         [HttpGet]

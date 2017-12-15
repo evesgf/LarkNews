@@ -3,6 +3,6 @@
 {
   "DBConfig": {
     //连接字符串
-    "DbLink": "Data Source=localhost;port=3306;Initial Catalog=NewsDB;uid=root;password=;Charset=utf8"
+    "DbLink": "Data Source=localhost;port=3306;Initial Catalog=newsDB;uid=root;password=larkmysql1234;Charset=utf8"
   }
 }

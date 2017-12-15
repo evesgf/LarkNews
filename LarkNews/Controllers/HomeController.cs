@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LarkNews.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LarkNews.Controllers
 {
+    //∆Ù”√øÁ”Ú
+    [EnableCors("AllowSameDomain")]
     [Produces("application/json")]
     [Route("api/[controller]/[action]")]
     public class HomeController : Controller
@@ -28,10 +31,10 @@ namespace LarkNews.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> FristPaper()
+        public string FristPaper()
         {
             var re = _pmTownService.GetFirstPaper();
-            return new string[] {re.NewsContent };
+            return re.NewsContent;
         }
 
         // GET api/values/5

@@ -47,6 +47,15 @@ namespace LarkNews
 
             //添加TimeJob
             services.AddTimedJob();
+
+            #region 跨域
+            //var urls = Configuration["AppConfig:Cores"].Split(',');
+            var urls = "http://newsserver.evesgf.com";
+            services.AddCors(options =>
+                options.AddPolicy("AllowSameDomain",
+                    builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials())
+            );
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

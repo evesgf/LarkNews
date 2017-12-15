@@ -32,37 +32,52 @@ namespace LarkNews.Services
 
         public int UpDateMorningPaper()
         {
-            var url = "http://www.pmtown.com/archives/category/paomianzaobanche";
+            var url = "http://www.pmtown.com/archives/category/%E6%97%A9%E6%8A%A5";
 
             var dom = new HtmlParser().Parse(GetHTMLByURL(url));
+            var newsTime = dom.QuerySelector("time").TextContent;
 
-            var publishTime = dom.QuerySelector("span.item-meta-li");
-
-            var info = dom.QuerySelectorAll("h2.item-title");
+            var info = dom.QuerySelectorAll("#list > article");
             if (info != null)
             {
-                var title= info.First().QuerySelectorAll("a").First().GetAttribute("title");
+                var title= info.First().QuerySelectorAll("a").First().TextContent;
                 var detailUrl = info.First().QuerySelectorAll("a").First().GetAttribute("href");
 
-                var dom2=new HtmlParser().Parse(GetHTMLByURL(detailUrl)).QuerySelectorAll("div.entry-content");
+                var dom2=new HtmlParser().Parse(GetHTMLByURL(detailUrl)).QuerySelectorAll("#article");
 
                 if (dom2 != null)
                 {
-                    var time = String2DateTime(publishTime.TextContent);
+                    //var time = String2DateTime(publishTime.TextContent);
                     //if (time == null) return -2;
+
+                    dom2.First().RemoveChild(dom2.First().QuerySelector("h1"));
+                    dom2.First().RemoveChild(dom2.First().QuerySelector("ul"));
+
+                    string context = dom2.First().TextContent.Replace("\t", "");
+                    context = context.Substring(context.IndexOf("【"));
+                    context = context.Replace(context.Substring(context.IndexOf("更早获取早报内容")+8),"");
 
                     var model = new NewsList
                     {
                         NewsFrom = "泡面小镇",
                         NewsFromUrl = detailUrl,
                         NewsTitle = title,
-                        NewsPublishTime = TimeHelper.ConvertToTimeStamp((DateTime)time),
-                        NewsContent = dom2.First().InnerHtml,
+                        NewsPublishTime = TimeHelper.ConvertToTimeStamp(Convert.ToDateTime(newsTime)),
+                        NewsContent = context,
                         NewsCreateTime = TimeHelper.ConvertToTimeStamp(DateTime.Now)
                     };
 
-                    _repository.Save(model);
-                    return 0;
+                    var first = GetFirstPaper();
+                    if (model.NewsPublishTime != first.NewsPublishTime)
+                    {
+                        _repository.Save(model);
+
+                        return 0;
+                    }
+                    else
+                    {
+                        return -3;
+                    }
                 }
             }
             else
