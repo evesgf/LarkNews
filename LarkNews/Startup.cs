@@ -40,6 +40,7 @@ namespace LarkNews
             //依赖注入
             services.AddTransient<ISiteService, SiteService>();
             services.AddTransient<IPMTownService, PmTownService>();
+            services.AddTransient<IBitNewsService, BitNewsService>();
             services.AddTransient<IRepository<NewsList>, MySqlResposity>();
 
             // Add framework services.

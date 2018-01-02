@@ -33,6 +33,21 @@ namespace LarkNews.Controllers
         [HttpGet]
         public string FristPaper()
         {
+            string week = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek);
+            if (week == "星期六" || week == "星期日")
+            {
+                return "欧尼酱~周末人家不上工哟,试下‘历史早报’吧";
+            }
+            else
+            {
+                var re = _pmTownService.GetFirstPaper();
+                return re.NewsContent;
+            }
+        }
+
+        [HttpGet]
+        public string LastPaper()
+        {
             var re = _pmTownService.GetFirstPaper();
             return re.NewsContent;
         }

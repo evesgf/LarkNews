@@ -39,6 +39,12 @@ namespace LarkNews.Dao
             return _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
         }
 
+        public IQueryable<T> GetQueryable(Expression<Func<T, bool>> express)
+        {
+            Func<T, bool> lamada = express.Compile();
+            return _context.Set<T>().Where(lamada).AsQueryable();
+        }
+
         public bool Delete(T entity, bool isCommit = true)
         {
             if (entity == null) return false;

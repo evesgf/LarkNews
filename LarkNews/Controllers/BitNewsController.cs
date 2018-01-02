@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using LarkNews.Services;
+using LarkNews.Entity;
 
 namespace LarkNews.Controllers
 {
@@ -13,36 +15,75 @@ namespace LarkNews.Controllers
     [Route("api/[controller]/[action]")]
     public class BitNewsController : Controller
     {
-        // GET api/values
+        private readonly IBitNewsService _bitNewsService;
+
+        public BitNewsController(IBitNewsService bitNewsService)
+        {
+            _bitNewsService = bitNewsService;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string GetNewestPaper()
         {
-            return new string[] { "value1", "value2" };
+            return "【金色财经】"+_bitNewsService.GetJinseNewestPaper().NewsContent+"\n【币世界】"+_bitNewsService.GetBishijieNewestPaper().NewsContent+"\n【BitCoin】"+_bitNewsService.GetBitcoinNewstPaper().NewsContent;
+        }
+        [HttpGet]
+        public IEnumerable<string> UpDateAllPaper()
+        {
+            var re1 = _bitNewsService.UpDateJinsePaper();
+            var re2 = _bitNewsService.UpDateBishijiePaper();
+            var re3 = _bitNewsService.UpdateBitcoinNewstPaper();
+            return new string[] { "value1", re1.ToString(),re2.ToString() };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [HttpGet]
+        public string GetJinseNewestPaper()
         {
-            return "value";
+            return _bitNewsService.GetJinseNewestPaper().NewsContent;
+        }
+        [HttpGet]
+        public IEnumerable<string> UpDateJinsePaper()
+        {
+            var re = _bitNewsService.UpDateJinsePaper();
+            return new string[] { "value1", re.ToString() };
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+
+        [HttpGet]
+        public string GetBishijieNewestPaper()
         {
+            return _bitNewsService.GetBishijieNewestPaper().NewsContent;
+        }
+        [HttpGet]
+        public IEnumerable<string> UpDateBishijiePaper()
+        {
+            var re = _bitNewsService.UpDateBishijiePaper();
+            return new string[] { "value1", re.ToString() };
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpGet]
+        public string GetOffSitePrice()
         {
+            return _bitNewsService.OffSitePrice();
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        //[HttpGet]
+        //public string GetHashpiNewestPaper()
+        //{
+        //    return _bitNewsService.GetHashpiNewestPaper().NewsContent;
+        //}
+        //[HttpGet]
+        //public IEnumerable<string> UpDateHashpiPaper()
+        //{
+        //    var re = _bitNewsService.UpDateHashpiPaper();
+        //    return new string[] { "value1", re.ToString() };
+        //}
+
+        [HttpGet]
+        public string UpdateBitcoinNewstPaper()
         {
+            return _bitNewsService.UpdateBitcoinNewstPaper().ToString();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace LarkNews.Services
 
         public NewsList GetFirstPaper()
         {
-            return _repository.GetFirstPaper();
+            return _repository.GetQueryable(p => p.NewsFrom.Equals("泡面小镇")).LastOrDefault();
         }
 
         public NewsList GetMorningPaper(int id)
@@ -68,6 +68,11 @@ namespace LarkNews.Services
                     };
 
                     var first = GetFirstPaper();
+                    if (first == null)
+                    {
+                        _repository.Save(model);
+                        return 0;
+                    }
                     if (model.NewsPublishTime != first.NewsPublishTime)
                     {
                         _repository.Save(model);
