@@ -10,10 +10,10 @@ namespace LarkNews.Dao
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private MyDbContext _context;
+        private MySqlDBContext _context;
         private UnitOfWork _unitOfWork;
 
-        public Repository(MyDbContext context)
+        public Repository(MySqlDBContext context)
         {
             _context = context;
             _unitOfWork = new UnitOfWork(_context);

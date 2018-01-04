@@ -1,0 +1,13 @@
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\LarkNews_v1.deps.json
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\LarkNews_v1.runtimeconfig.json
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\LarkNews_v1.runtimeconfig.dev.json
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\LarkNews_v1.dll
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.csprojResolveAssemblyReference.cache
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.csproj.CoreCompileInputs.cache
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.AssemblyInfoInputs.cache
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.AssemblyInfo.cs
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\Config\SiteConfig.json
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\LarkNews_v1.pdb
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.dll
+E:\Dev\LarkNews\LarkNews_v1\obj\Debug\netcoreapp2.0\LarkNews_v1.pdb
+E:\Dev\LarkNews\LarkNews_v1\bin\Debug\netcoreapp2.0\appsettings.json

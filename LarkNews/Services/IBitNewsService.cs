@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LarkNews.Services
 {
-    public interface IBitNewsService
+    public interface IBitNewsService: IDependencyRegister
     {
         #region 金色财经 http://www.jinse.com/lives
 

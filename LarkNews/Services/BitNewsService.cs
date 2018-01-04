@@ -182,18 +182,23 @@ namespace LarkNews.Services
         {
             string re= "马基雅巴库内！";
 
-            //BTC/CNY
-            string url = "https://localbitcoins.com/instant-bitcoins/?action=buy&country_code=CN&amount=&currency=CNY&place_country=CN&online_provider=ALL_ONLINE&find-offers=%E6%90%9C%E7%B4%A2";
+            //localbitcoins买一
+            string url ="https://localbitcoins.com/zh-cn/sell_bitcoins";
 
             var dom = new HtmlParser().Parse(GetHTMLByURL(url));
-            var buy = dom.QuerySelectorAll("body > div.container > table > tbody > tr:nth-child(2) > td.column-price").FirstOrDefault().TextContent;
+            var buy = dom.QuerySelectorAll(".column-price").FirstOrDefault().TextContent;
+            var x = dom.QuerySelectorAll("#purchase-bitcoins-online").FirstOrDefault();
 
-            re = "btc localbitcoins卖一:" + buy.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
+            re = "btc localbitcoins买一:" + buy.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
 
+            //localbitcoins卖一
             string url2 = "https://otc.huobipro.com/#/trade/list?coin=1&type=1";
 
+            var xx = GetHTMLByURL(url2);
             var dom2 = new HtmlParser().Parse(GetHTMLByURL(url2));
-            var buy2 = dom2.QuerySelectorAll(".tables-item").FirstOrDefault();
+            var buy2 = dom.QuerySelectorAll(".column-price").FirstOrDefault().TextContent;
+            var x1 = dom.QuerySelectorAll("#sell-bitcoins-online").FirstOrDefault();
+            re += " 卖一:" + buy.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
 
             return re;
         }

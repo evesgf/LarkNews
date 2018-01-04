@@ -8,7 +8,7 @@ namespace LarkNews.Dao
 {
     public class MySqlResposity:Repository<NewsList>
     {
-        public MySqlResposity(MyDbContext context) : base(context)
+        public MySqlResposity(MySqlDBContext context) : base(context)
         {
         }
     }

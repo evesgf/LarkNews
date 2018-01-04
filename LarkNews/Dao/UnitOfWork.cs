@@ -7,9 +7,9 @@ namespace LarkNews.Dao
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private MyDbContext _context;
+        private MySqlDBContext _context;
 
-        public UnitOfWork(MyDbContext context)
+        public UnitOfWork(MySqlDBContext context)
         {
             _context = context;
         }

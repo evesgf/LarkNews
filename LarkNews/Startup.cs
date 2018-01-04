@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MySQL.Data.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
+using LarkNews.Commons;
+using System.Reflection;
 
 namespace LarkNews
 {
@@ -35,13 +37,16 @@ namespace LarkNews
         {
             //添加数据库链接配置
             //var dblink = "Data Source=localhost;port=3306;Initial Catalog=NewsDB;uid=root;password=;Character Set=utf8;";
-            services.AddDbContext<MyDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
+            services.AddDbContext<MySqlDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
 
             //依赖注入
-            services.AddTransient<ISiteService, SiteService>();
-            services.AddTransient<IPMTownService, PmTownService>();
-            services.AddTransient<IBitNewsService, BitNewsService>();
-            services.AddTransient<IRepository<NewsList>, MySqlResposity>();
+            //services.AddTransient<ISiteService, SiteService>();
+            //services.AddTransient<IPMTownService, PmTownService>();
+            //services.AddTransient<IBitNewsService, BitNewsService>();
+            //services.AddTransient<IRepository<NewsList>, MySqlResposity>();
+
+            //循环依赖注入
+            services.AddCommandHandlers(Assembly.GetEntryAssembly());
 
             // Add framework services.
             services.AddMvc();
@@ -70,10 +75,10 @@ namespace LarkNews
             //检查数据库
             using (var ser = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                ser.ServiceProvider.GetService<MyDbContext>().Database.Migrate();
+                ser.ServiceProvider.GetService<MySqlDBContext>().Database.Migrate();
                 //ser.ServiceProvider.GetService<TestAllDbContext>().Database.EnsureSeedData();
             }
-            
+
             //使用TimeJob
             app.UseTimedJob();
         }

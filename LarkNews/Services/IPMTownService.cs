@@ -6,7 +6,7 @@ using LarkNews.Entity;
 
 namespace LarkNews.Services
 {
-    public interface IPMTownService
+    public interface IPMTownService: IDependencyRegister
     {
         NewsList GetFirstPaper();
         NewsList GetMorningPaper(int id);
