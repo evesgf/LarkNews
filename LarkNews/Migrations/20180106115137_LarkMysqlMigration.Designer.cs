@@ -8,9 +8,10 @@ using LarkNews.Dao;
 namespace LarkNews.Migrations
 {
     [DbContext(typeof(MySqlDBContext))]
-    partial class MySqlDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180106115137_LarkMysqlMigration")]
+    partial class LarkMysqlMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");

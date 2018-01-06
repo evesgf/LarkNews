@@ -6,6 +6,7 @@ using LarkNews.Entity;
 using Microsoft.EntityFrameworkCore;
 using LarkNews.Entitys;
 using LarkNews.Mappings;
+using Pomelo.AspNetCore.TimedJob.EntityFramework;
 
 namespace LarkNews.Dao
 {
@@ -14,9 +15,11 @@ namespace LarkNews.Dao
     /// 开启自动迁移:Enable-Migrations -EnableAutomaticMigrations
     /// 更新数据库：Update-Database
     /// </summary>
-    public class MySqlDBContext: DbContext
+    public class MySqlDBContext: DbContext, ITimedJobContext
     {
         public MySqlDBContext(DbContextOptions<MySqlDBContext> options) : base(options){ }
+
+        public DbSet<TimedJob> TimedJobs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

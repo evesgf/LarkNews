@@ -15,6 +15,8 @@ using MySQL.Data.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using LarkNews.Commons;
 using System.Reflection;
+using Pomelo.AspNetCore.TimedJob.EntityFramework;
+using LarkNews.TimedJobs;
 
 namespace LarkNews
 {
@@ -43,7 +45,8 @@ namespace LarkNews
             //services.AddTransient<ISiteService, SiteService>();
             //services.AddTransient<IPMTownService, PmTownService>();
             //services.AddTransient<IBitNewsService, BitNewsService>();
-            //services.AddTransient<IRepository<NewsList>, MySqlResposity>();
+            services.AddTransient<IRepository<NewsList>, MySqlResposity>();
+            //services.AddTransient<IRepository<TimedJob>, MySqlResposity>();
 
             //循环依赖注入
             services.AddCommandHandlers(Assembly.GetEntryAssembly());
@@ -52,7 +55,7 @@ namespace LarkNews
             services.AddMvc();
 
             //添加TimeJob
-            services.AddTimedJob();
+            services.AddTimedJob().AddEntityFrameworkDynamicTimedJob<MySqlDBContext>();
 
             #region 跨域
             //var urls = Configuration["AppConfig:Cores"].Split(',');
@@ -76,11 +79,11 @@ namespace LarkNews
             using (var ser = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 ser.ServiceProvider.GetService<MySqlDBContext>().Database.Migrate();
-                //ser.ServiceProvider.GetService<TestAllDbContext>().Database.EnsureSeedData();
             }
 
             //使用TimeJob
             app.UseTimedJob();
+            SampleData.InitDB(app.ApplicationServices); // 初始化数据库
         }
     }
 }

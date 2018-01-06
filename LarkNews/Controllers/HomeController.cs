@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LarkNews.Services.Home;
+using LarkNews.TimedJobs;
 
 namespace LarkNews.Controllers
 {
@@ -30,8 +31,19 @@ namespace LarkNews.Controllers
         [HttpGet]
         public IEnumerable<string> Index()
         {
-            return new string[] { "Hello World! This is LarkNews!", _IHomeService.GetChinaTime().Result };
+            return new string[] { "Hello World! This is LarkNews!", _IHomeService.GetFirstPaper().NewsContent };
         }
+
+        ///// <summary>
+        ///// Home
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public string TestAddTimeJob()
+        //{
+        //    _ITimeJobsService.TestAdd();
+        //    return "AddOK";
+        //}
 
         //// GET api/values
         //[HttpGet]
