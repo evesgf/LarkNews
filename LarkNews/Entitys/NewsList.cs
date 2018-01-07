@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LarkNews.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LarkNews.Entity
 {
-    public class NewsList
+    public class NewsList: IDependencyRegister
     {
         public int Id { get; set; }
         /// <summary>

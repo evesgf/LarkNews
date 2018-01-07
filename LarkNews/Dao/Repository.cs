@@ -5,58 +5,88 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LarkNews.Entity;
 using Microsoft.EntityFrameworkCore;
+using LarkNews.Services;
 
 namespace LarkNews.Dao
 {
-    public abstract class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class, IDependencyRegister
     {
-        private MySqlDBContext _context;
-        private UnitOfWork _unitOfWork;
+        private readonly MySqlDBContext _MySqlDBContext;
 
-        public Repository(MySqlDBContext context)
+        public Repository(MySqlDBContext mySqlDBContext)
         {
-            _context = context;
-            _unitOfWork = new UnitOfWork(_context);
+            _MySqlDBContext = mySqlDBContext;
         }
 
-        public bool Save(T entity, bool isCommit = true)
+        public virtual T GetById(object id)
         {
-            _context.Add(entity);
-
-            return isCommit && _unitOfWork.Commit();
+            return _MySqlDBContext.Set<T>().Find(id);
         }
 
-        public bool Update(T entity, bool isCommit = true)
+        public T Get(Expression<Func<T, bool>> expression)
         {
-            _context.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-
-            return isCommit && _unitOfWork.Commit();
+            return _MySqlDBContext.Set<T>().AsNoTracking().SingleOrDefault(expression);
         }
 
-        public T Get(Expression<Func<T, bool>> predicate)
+        public virtual void Insert(T entity)
         {
-            return _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
+            try
+            {
+                if (entity == null)
+                    throw new ArgumentNullException("entity");
+
+                _MySqlDBContext.Set<T>().Add(entity);
+
+                _MySqlDBContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public IQueryable<T> GetQueryable(Expression<Func<T, bool>> express)
+        public virtual void Update(T entity)
         {
-            Func<T, bool> lamada = express.Compile();
-            return _context.Set<T>().Where(lamada).AsQueryable();
+            try
+            {
+                if (entity == null)
+                    throw new ArgumentNullException("entity");
+
+                _MySqlDBContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public bool Delete(T entity, bool isCommit = true)
+        public virtual void Delete(T entity)
         {
-            if (entity == null) return false;
+            try
+            {
+                if (entity == null)
+                    throw new ArgumentNullException("entity");
 
-            _context.Remove(entity);
+                _MySqlDBContext.Set<T>().Remove(entity);
 
-            return isCommit && _unitOfWork.Commit();
+                _MySqlDBContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public T GetFirstPaper()
+        public virtual IQueryable<T> Table
         {
-            return _context.Set<T>().LastOrDefault();
+            get
+            {
+                return _MySqlDBContext.Set<T>();
+            }
+        }
+        IQueryable<T> IRepository<T>.Table
+        {
+            get { return Table; }
         }
     }
 }

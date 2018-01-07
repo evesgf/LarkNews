@@ -6,12 +6,12 @@ namespace LarkNews.TimedJobs
 {
     public class PrintJob : Job
     {
-        public readonly IPMTownService _IPMTownService;
+        //public readonly IPMTownService _IPMTownService;
 
-        public PrintJob(IPMTownService iPMTownService)
-        {
-            _IPMTownService = iPMTownService;
-        }
+        //public PrintJob(IPMTownService iPMTownService)
+        //{
+        //    _IPMTownService = iPMTownService;
+        //}
 
         public void Print()
         {

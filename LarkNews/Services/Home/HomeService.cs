@@ -1,7 +1,9 @@
 ﻿using AngleSharp.Parser.Html;
+using LarkNews.Commons;
 using LarkNews.Crawler;
 using LarkNews.Dao;
 using LarkNews.Entity;
+using LarkNews.TimedJobs;
 using Pomelo.AspNetCore.TimedJob.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,13 @@ namespace LarkNews.Services.Home
     {
 
         private readonly IRepository<NewsList> _repository;
-        private readonly IRepository<TimedJob> _repository2;
+        private readonly ITimeJobsService _ITimeJobsService;
 
         public HomeService(IRepository<NewsList> repository,
-            IRepository<TimedJob> repository2)
+            ITimeJobsService iTimeJobsService)
         {
             _repository = repository;
-            _repository2 = repository2;
+            _ITimeJobsService = iTimeJobsService;
         }
 
 
@@ -39,9 +41,25 @@ namespace LarkNews.Services.Home
             return reTime;
         }
 
+        public int UpDateMorningPaper()
+        {
+            var model = new NewsList
+            {
+                NewsFrom = "泡面小镇",
+                NewsFromUrl = "泡面小镇",
+                NewsTitle = "泡面小镇",
+                NewsPublishTime = TimeHelper.ConvertToTimeStamp(DateTime.Now),
+                NewsContent = "泡面小镇",
+                NewsCreateTime = TimeHelper.ConvertToTimeStamp(DateTime.Now)
+            };
+
+            _repository.Insert(model);
+            return 0;
+        }
+
         public NewsList GetFirstPaper()
         {
-            return _repository.GetQueryable(p => p.NewsFrom.Equals("泡面小镇")).LastOrDefault();
+            return _repository.Get(p => p.NewsFrom.Equals("泡面小镇"));
         }
 
         public void AddTestTimeJobs()
@@ -53,7 +71,7 @@ namespace LarkNews.Services.Home
                 Interval = 3000,
                 IsEnabled = true
             };
-            _repository2.Save(model);
+            _ITimeJobsService.AddTimeJob(model);
         }
     }
 }

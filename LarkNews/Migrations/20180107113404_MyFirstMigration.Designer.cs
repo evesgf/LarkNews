@@ -8,9 +8,10 @@ using LarkNews.Dao;
 namespace LarkNews.Migrations
 {
     [DbContext(typeof(MySqlDBContext))]
-    partial class MySqlDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180107113404_MyFirstMigration")]
+    partial class MyFirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -65,22 +66,22 @@ namespace LarkNews.Migrations
                     b.ToTable("Sys_User");
                 });
 
-            modelBuilder.Entity("Pomelo.AspNetCore.TimedJob.EntityFramework.TimedJob", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(512);
+            //modelBuilder.Entity("Pomelo.AspNetCore.TimedJob.EntityFramework.TimedJob", b =>
+            //    {
+            //        b.Property<string>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasMaxLength(512);
 
-                    b.Property<DateTime>("Begin");
+            //        b.Property<DateTime>("Begin");
 
-                    b.Property<int>("Interval");
+            //        b.Property<int>("Interval");
 
-                    b.Property<bool>("IsEnabled");
+            //        b.Property<bool>("IsEnabled");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("AspNetTimedJobs");
-                });
+            //        b.ToTable("AspNetTimedJobs");
+            //    });
         }
     }
 }

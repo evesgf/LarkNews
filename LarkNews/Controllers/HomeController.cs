@@ -18,10 +18,12 @@ namespace LarkNews.Controllers
     public class HomeController : Controller
     {
         private readonly IHomeService _IHomeService;
+        //private readonly IPMTownService _IPMTownService;
 
         public HomeController(IHomeService iHomeService)
         {
             _IHomeService = iHomeService;
+            //_IPMTownService = iPMTownService;
         }
 
         /// <summary>
@@ -31,7 +33,8 @@ namespace LarkNews.Controllers
         [HttpGet]
         public IEnumerable<string> Index()
         {
-            return new string[] { "Hello World! This is LarkNews!", _IHomeService.GetFirstPaper().NewsContent };
+            //_IHomeService.AddTestTimeJobs();
+            return new string[] { "Hello World! This is LarkNews!"};
         }
 
         ///// <summary>
@@ -45,13 +48,13 @@ namespace LarkNews.Controllers
         //    return "AddOK";
         //}
 
-        //// GET api/values
-        //[HttpGet]
-        //public IEnumerable<string> UpDateMorningPaper()
-        //{
-        //    var re = _pmTownService.UpDateMorningPaper();
-        //    return new string[] { "value1", re.ToString() };
-        //}
+        // GET api/values
+        [HttpGet]
+        public IEnumerable<string> UpDateMorningPaper()
+        {
+            var re = _IHomeService.GetFirstPaper();
+            return new string[] { "value1", re.ToString() };
+        }
 
         //[HttpGet]
         //public string FristPaper()
@@ -63,7 +66,7 @@ namespace LarkNews.Controllers
         //    }
         //    else
         //    {
-        //        var re = _pmTownService.GetFirstPaper();
+        //        var re = _IPMTownService.GetFirstPaper();
         //        return re.NewsContent;
         //    }
         //}
@@ -71,7 +74,7 @@ namespace LarkNews.Controllers
         //[HttpGet]
         //public string LastPaper()
         //{
-        //    var re = _pmTownService.GetFirstPaper();
+        //    var re = _IPMTownService.GetFirstPaper();
         //    return re.NewsContent;
         //}
 
@@ -79,7 +82,7 @@ namespace LarkNews.Controllers
         //[HttpGet("{id}")]
         //public string Get(int id)
         //{
-        //    return _pmTownService.GetMorningPaper(id).NewsContent;
+        //    return _IPMTownService.GetMorningPaper(id).NewsContent;
         //}
     }
 }

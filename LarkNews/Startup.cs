@@ -83,7 +83,7 @@ namespace LarkNews
 
             //使用TimeJob
             app.UseTimedJob();
-            SampleData.InitDB(app.ApplicationServices); // 初始化数据库
+            //SampleData.InitDB(app.ApplicationServices); // 初始化数据库
         }
     }
 }

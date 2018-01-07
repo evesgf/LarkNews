@@ -1,0 +1,12 @@
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\EFCore2Test.deps.json
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\EFCore2Test.runtimeconfig.json
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\EFCore2Test.runtimeconfig.dev.json
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\EFCore2Test.dll
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.csprojResolveAssemblyReference.cache
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.csproj.CoreCompileInputs.cache
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.AssemblyInfoInputs.cache
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.AssemblyInfo.cs
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\appsettings.json
+E:\Dev\LarkNews\EFCore2Test\bin\Debug\netcoreapp2.0\EFCore2Test.pdb
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.dll
+E:\Dev\LarkNews\EFCore2Test\obj\Debug\netcoreapp2.0\EFCore2Test.pdb

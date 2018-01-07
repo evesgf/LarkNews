@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\BitNewsController.cs" />
+    <Compile Remove="Services\BitNewsService.cs" />
+    <Compile Remove="Services\IBitNewsService.cs" />
+    <Compile Remove="Services\IPMTownService.cs" />
+    <Compile Remove="Services\PmTownService.cs" />
+    <Compile Remove="TimedJobs\PMTownJob.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
 

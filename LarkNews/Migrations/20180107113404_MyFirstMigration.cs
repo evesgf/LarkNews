@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LarkNews.Migrations
 {
-    public partial class LarkMysqlMigration : Migration
+    public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,12 +14,12 @@ namespace LarkNews.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    NewsContent = table.Column<string>(nullable: true),
-                    NewsCreateTime = table.Column<long>(nullable: false),
-                    NewsFrom = table.Column<string>(nullable: true),
-                    NewsFromUrl = table.Column<string>(nullable: true),
-                    NewsPublishTime = table.Column<long>(nullable: false),
-                    NewsTitle = table.Column<string>(nullable: true)
+                    NewsContent = table.Column<string>(maxLength: 50, nullable: false),
+                    NewsCreateTime = table.Column<long>(maxLength: 50, nullable: false),
+                    NewsFrom = table.Column<string>(maxLength: 50, nullable: false),
+                    NewsFromUrl = table.Column<string>(maxLength: 50, nullable: false),
+                    NewsPublishTime = table.Column<long>(maxLength: 50, nullable: false),
+                    NewsTitle = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,19 +40,19 @@ namespace LarkNews.Migrations
                     table.PrimaryKey("PK_Sys_User", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "AspNetTimedJobs",
-                columns: table => new
-                {
-                    Id = table.Column<string>(maxLength: 512, nullable: false),
-                    Begin = table.Column<DateTime>(nullable: false),
-                    Interval = table.Column<int>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetTimedJobs", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "AspNetTimedJobs",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<string>(maxLength: 512, nullable: false),
+            //        Begin = table.Column<DateTime>(nullable: false),
+            //        Interval = table.Column<int>(nullable: false),
+            //        IsEnabled = table.Column<bool>(nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_AspNetTimedJobs", x => x.Id);
+            //    });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -63,8 +63,8 @@ namespace LarkNews.Migrations
             migrationBuilder.DropTable(
                 name: "Sys_User");
 
-            migrationBuilder.DropTable(
-                name: "AspNetTimedJobs");
+            //migrationBuilder.DropTable(
+            //    name: "AspNetTimedJobs");
         }
     }
 }

@@ -23,7 +23,13 @@ namespace LarkNews.Mappings
 
         public UserMapping(EntityTypeBuilder<NewsList> entityTypeBuilder)
         {
-            this.entityTypeBuilder = entityTypeBuilder;
+            entityTypeBuilder.Property(x => x.Id).IsRequired();
+            entityTypeBuilder.Property(x => x.NewsContent).IsRequired().HasMaxLength(50);
+            entityTypeBuilder.Property(x => x.NewsCreateTime).IsRequired().HasMaxLength(50);
+            entityTypeBuilder.Property(x => x.NewsFrom).IsRequired().HasMaxLength(50);
+            entityTypeBuilder.Property(x => x.NewsFromUrl).IsRequired().HasMaxLength(50);
+            entityTypeBuilder.Property(x => x.NewsPublishTime).IsRequired().HasMaxLength(50);
+            entityTypeBuilder.Property(x => x.NewsTitle).IsRequired().HasMaxLength(50);
         }
     }
 }

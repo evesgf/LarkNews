@@ -10,6 +10,8 @@ namespace LarkNews.Services.Home
     {
         Task<string> GetChinaTime();
 
+        int UpDateMorningPaper();
+
         NewsList GetFirstPaper();
 
         void AddTestTimeJobs();

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LarkNews.Dao
 {
-    public interface IRepository<T> :IDependencyRegister where T:class
+    public interface IRepository<T> where T:class, IDependencyRegister
     {
-        bool Save(T entity, bool isCommit = true);
-        bool Update(T entity, bool isCommit = true);
-        T Get(Expression<Func<T, bool>> predicate);
-        IQueryable<T> GetQueryable(Expression<Func<T, bool>> express);
-        bool Delete(T entity, bool isCommit = true);
-        T GetFirstPaper();
+        T GetById(object id);
+        T Get(Expression<Func<T, bool>> expression);
+        void Insert(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+        IQueryable<T> Table { get; }
     }
 }
